@@ -1,0 +1,103 @@
+<div class="card bg-light mb-1 mt-1" *ngFor="let lead of leadsList">
+  <h2 class="card-header">{{ lead.first_name + " " + lead.last_name }}</h2>
+  <div class="card-body row wrap">
+    <p class="card-title col-4">source : {{ lead.source }}</p>
+    <p class="card-text col-4">
+      email : {{ lead.email ? lead.email : " hasn't email" }}
+    </p>
+
+    <p class="card-text col-4">
+      Home phone :
+      {{ lead.home_phone ? lead.home_phone : "  hasn't Home phone" }}
+    </p>
+
+    <p class="card-text col-4">
+      Cell phone :
+      {{ lead.cell_phone ? lead.cell_phone : " hasn't cell phone" }}
+    </p>
+    <button class="btn btn-light col-2" (click)="openLeadDuplicate(lead)">
+      Potential Duplicates
+    </button>
+  </div>
+</div>
+<div class="popup" *ngIf="showLeadDuplicates">
+  <div class="popup-content">
+    <div class="card bg-light mb-1 mt-1" style="width: 960px">
+      <h2 class="card-header">
+        The main Lead :
+        {{
+          currentSelectedLead.first_name + " " + currentSelectedLead.last_name
+        }}
+      </h2>
+      <div class="card-body row">
+        <p class="card-title col-6">
+          source : {{ currentSelectedLead.source }}
+        </p>
+        <p class="card-text col-6">
+          email :
+          {{
+            currentSelectedLead.email
+              ? currentSelectedLead.email
+              : " hasn't email"
+          }}
+        </p>
+
+        <p class="card-text col-6">
+          Home phone :
+          {{
+            currentSelectedLead.home_phone
+              ? currentSelectedLead.home_phone
+              : "  hasn't Home phone"
+          }}
+        </p>
+
+        <p class="card-text col-6">
+          Cell phone :
+          {{
+            currentSelectedLead.cell_phone
+              ? currentSelectedLead.cell_phone
+              : " hasn't cell phone"
+          }}
+        </p>
+      </div>
+    </div>
+    <div>
+      <div class="row wrap">
+        <div
+          class="card bg-light mb-1 mt-1"
+          style="width: 300px"
+          *ngFor="let lead of leadPotentialDuplicateInfo"
+        >
+          <h3 class="card-header">
+            {{ lead.first_name + " " + lead.last_name }}
+          </h3>
+          <div class="card-body row wrap">
+            <p class="card-title">source : {{ lead.source }}</p>
+            <p class="">
+              email : {{ lead.email ? lead.email : " hasn't email" }}
+            </p>
+
+            <p class="">
+              Home phone :
+              {{ lead.home_phone ? lead.home_phone : "  hasn't Home phone" }}
+            </p>
+
+            <p class="">
+              Cell phone :
+              {{ lead.cell_phone ? lead.cell_phone : " hasn't cell phone" }}
+            </p>
+            <button
+              class="btn btn-primary"
+              (click)="
+                setAsActualDuplicates(currentSelectedLead.lead_id, lead.lead_id)
+              "
+            >
+              actual duplicate
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-danger" (click)="closeleadDuplicate()">close</button>
+  </div>
+</div>
